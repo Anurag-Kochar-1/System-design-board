@@ -10,6 +10,7 @@ type CustomNode = {
   name: string;
   icon: string;
   description: string;
+  type:string
 };
 
 export const CUSTOM_NODE_GROUPES: CustomNodeGroup[] = [
@@ -23,73 +24,75 @@ export const CUSTOM_NODE_GROUPES: CustomNodeGroup[] = [
         name: "Relational",
         description: "",
         icon: "",
+        type: "relational"
       },
       {
         id: "nosql",
         name: "NoSQL",
         description: "",
         icon: "",
+        type: "nosql"
       },
     ],
   },
-  {
-    id: "trigger",
-    name: "Trigger",
-    icon: "",
-    nodes: [
-      {
-        id: "creator",
-        name: "Creator",
-        description: "",
-        icon: "",
-      },
-      {
-        id: "consumer",
-        name: "Consumer",
-        description: "",
-        icon: "",
-      },
-      {
-        id: "cronJob",
-        name: "Cron job",
-        description: "",
-        icon: "",
-      },
-    ],
-  },
-  {
-    id: "loadBalancer",
-    name: "Load Balancer",
-    icon: "",
-  },
-  {
-    id: "cache",
-    name: "Cache",
-    icon: "",
-  },
-  {
-    id: "thirdPartyServer",
-    name: "Third Party Server",
-    icon: "",
-    nodes: [
-      {
-        id: "keyGenerationService",
-        name: "Key Generation Service",
-        icon: "",
-        description: "",
-      },
-      {
-        id: "countryLookupService",
-        name: "Country Lookup Service",
-        icon: "",
-        description: "",
-      },
-      {
-        id: "baseWordProcessor",
-        name: "Base Word Processor",
-        icon: "",
-        description: "",
-      },
-    ],
-  },
+  // {
+  //   id: "trigger",
+  //   name: "Trigger",
+  //   icon: "",
+  //   nodes: [
+  //     {
+  //       id: "creator",
+  //       name: "Creator",
+  //       description: "",
+  //       icon: "",
+  //     },
+  //     {
+  //       id: "consumer",
+  //       name: "Consumer",
+  //       description: "",
+  //       icon: "",
+  //     },
+  //     {
+  //       id: "cronJob",
+  //       name: "Cron job",
+  //       description: "",
+  //       icon: "",
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: "loadBalancer",
+  //   name: "Load Balancer",
+  //   icon: "",
+  // },
+  // {
+  //   id: "cache",
+  //   name: "Cache",
+  //   icon: "",
+  // },
+  // {
+  //   id: "thirdPartyServer",
+  //   name: "Third Party Server",
+  //   icon: "",
+  //   nodes: [
+  //     {
+  //       id: "keyGenerationService",
+  //       name: "Key Generation Service",
+  //       icon: "",
+  //       description: "",
+  //     },
+  //     {
+  //       id: "countryLookupService",
+  //       name: "Country Lookup Service",
+  //       icon: "",
+  //       description: "",
+  //     },
+  //     {
+  //       id: "baseWordProcessor",
+  //       name: "Base Word Processor",
+  //       icon: "",
+  //       description: "",
+  //     },
+  //   ],
+  // },
 ];

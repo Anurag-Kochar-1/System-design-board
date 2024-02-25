@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import React from "react";
-import { Panel } from "reactflow";
+import { Panel, useNodes, useReactFlow } from "reactflow";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -15,10 +15,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { CUSTOM_NODE_GROUPES } from "@/constants/custom-node.data";
-import { useStore } from "@/store";
 export const Dock = () => {
-  const store = useStore();
-  const updateNodeColor = useStore((s) => s.updateNodeColor);
+  const nodes = useNodes();
+  const reactFlow = useReactFlow();
+  const onDragStart = (
+    event: React.DragEvent<HTMLDivElement>,
+    nodeType: string
+  ) => {
+    event.dataTransfer.setData("application/reactflow", nodeType);
+    event.dataTransfer.effectAllowed = "move";
+  };
   return (
     <Panel
       position="bottom-center"
@@ -56,13 +62,27 @@ export const Dock = () => {
                       return (
                         <div
                           key={node.id}
-                          className="flex w-full justify-start items-center gap-2"
+                          className="flex w-full justify-start items-center gap-2 p-2 border-black border-2"
+                          onDragStart={(event) => onDragStart(event, node.type)}
+                          draggable
                         >
                           <div className="aspect-square h-full bg-primary rounded-md"></div>
                           <div className="mr-auto flex flex-col justify-start items-start">
                             <span className="">{node.name}</span>
                           </div>
-                          <Button variant={"outline"} size={"sm"}>
+                          <Button
+                            variant={"outline"}
+                            size={"sm"}
+                            onClick={() => {
+                              const testNode: any = {
+                                id: "asd",
+                                type: "creator",
+                                position: { x: 100, y: 50 },
+                                data: { label: `test` },
+                              };
+                              reactFlow.setNodes((nds) => nds.concat(testNode));
+                            }}
+                          >
                             {" "}
                             Add
                           </Button>
@@ -88,16 +108,12 @@ export const Dock = () => {
         <PopoverContent side="top" className="mb-10">
           <div
             className="max-w-md h-72 bg-primary"
-            onClick={() => console.log(store)}
-            // style={{ backgroundColor: data.color, borderRadius: 10 }}/
+            onClick={() => {
+              console.log(nodes);
+            }}
           >
             log
           </div>
-          <input
-            type="color"
-            onChange={(evt) => updateNodeColor("1", evt.target.value)}
-            className="nodrag"
-          />
         </PopoverContent>
       </Popover>
     </Panel>
