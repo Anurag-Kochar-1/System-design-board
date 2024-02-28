@@ -1,7 +1,8 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import React from "react";
-import { Handle, NodeToolbar, Position } from "reactflow";
+import React, { useCallback } from "react";
+import { Handle, NodeToolbar, Position, useReactFlow } from "reactflow";
 
 const DEFAULT_HANDLE_STYLE = {
   width: 10,
@@ -10,31 +11,42 @@ const DEFAULT_HANDLE_STYLE = {
 };
 
 type CustomNodeProps = {
+  type: string;
+  id?: string;
   name: string;
-  bgColor: string;
+  bgColor?: string;
   forceToolbarVisible?: boolean;
   isConnectable?: boolean;
 };
 
 export function CustomNode({
+  id,
+  type,
   name,
   bgColor,
   forceToolbarVisible,
-  isConnectable
+  isConnectable = true,
 }: CustomNodeProps) {
+  const reactFlow = useReactFlow();
+
+  const deleteNode = useCallback(() => {
+    reactFlow.setNodes((nodes) => nodes.filter((node) => node.id !== id));
+    reactFlow.setEdges((edges) => edges.filter((edge) => edge.source !== id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type]);
   return (
     <>
       <NodeToolbar
         isVisible={forceToolbarVisible || undefined}
         position={Position.Top}
       >
-        <Button variant={"destructive"} size={"sm"}>
+        <Button variant={"destructive"} size={"sm"} onClick={deleteNode}>
           Delete
         </Button>
       </NodeToolbar>
       <div
         className={cn(
-          `min-w-[10rem] shadow-md rounded-md text-center py-1 font-medium`,
+          `min-w-[10rem] shadow-md rounded-md text-center py-1 font-medium bg-background border-2`,
           bgColor
         )}
       >
@@ -64,26 +76,26 @@ export function CustomNode({
           position={Position.Bottom}
           className="w-1 rounded-full bg-gray-500"
         /> */}
-         <Handle
+        <Handle
           type="source"
           id="red"
           position={Position.Bottom}
-          style={{ ...DEFAULT_HANDLE_STYLE, left: '10%', background: 'red' }}
-          onConnect={(params) => console.log('handle onConnect', params)}
+          style={{ ...DEFAULT_HANDLE_STYLE, left: "10%", background: "red" }}
+          onConnect={(params) => console.log("handle onConnect", params)}
           isConnectable={isConnectable}
         />
         <Handle
           type="source"
           position={Position.Bottom}
           id="blue"
-          style={{ ...DEFAULT_HANDLE_STYLE, left: '20%', background: 'blue' }}
+          style={{ ...DEFAULT_HANDLE_STYLE, left: "20%", background: "blue" }}
           isConnectable={isConnectable}
         />
         <Handle
           type="source"
           position={Position.Bottom}
           id="orange"
-          style={{ ...DEFAULT_HANDLE_STYLE, left: '30%', background: 'orange' }}
+          style={{ ...DEFAULT_HANDLE_STYLE, left: "30%", background: "orange" }}
           isConnectable={isConnectable}
         />
       </div>

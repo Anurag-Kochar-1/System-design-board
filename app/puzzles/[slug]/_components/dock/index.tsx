@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
-import React, { useMemo, useState } from "react";
-import { Panel, useNodes, useReactFlow } from "reactflow";
+import React from "react";
+import { Panel } from "reactflow";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -14,10 +14,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CUSTOM_NODE_GROUPES, CustomNode } from "@/constants/custom-node.data";
+import { CUSTOM_NODE_GROUPES } from "@/constants/custom-node.data";
 import { SearchPopoverContent } from "./search-popover-content";
 export const Dock = () => {
-  const nodes = useNodes();
   const onDragStart = (
     event: React.DragEvent<HTMLDivElement>,
     nodeType: string

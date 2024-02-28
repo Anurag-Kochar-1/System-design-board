@@ -88,9 +88,7 @@ export const Flow = () => {
       []
     );
     allNodes.forEach((node) => {
-      components[node.type] = (props: any) => (
-        <CustomNode name={props?.type} bgColor="bg-blue-400" />
-      );
+      components[node.type] = (props:any) => <CustomNode type={node.id} name={node?.name} {...props} />;
     });
     return components;
   };
