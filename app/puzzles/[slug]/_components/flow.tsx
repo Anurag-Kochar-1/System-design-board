@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import ReactFlow, {
   Controls,
   Background,
@@ -12,6 +12,9 @@ import ReactFlow, {
   useReactFlow,
 } from "reactflow";
 import { Dock } from "./dock";
+import { CustomNode } from "./custom-node";
+import { NodeContextMenu } from "./node-context-menu";
+import { DeleteEdge } from "./delete-edge";
 const initialNodes: Node[] = [
   { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
   { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
@@ -24,9 +27,14 @@ export const Flow = () => {
   const reactFlow = useReactFlow();
   const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
+  const [menu, setMenu] = useState<any>(null);
+  const ref = useRef<any>(null);
 
   const onConnect: OnConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params) => {
+      const edge = { ...params, type: "delete-edge" };
+      setEdges((eds) => addEdge(edge, eds));
+    },
     [setEdges]
   );
   const onDragOver = useCallback((event: any) => {
@@ -61,6 +69,42 @@ export const Flow = () => {
     [reactFlow]
   );
 
+  const nodeTypes = useMemo(
+    () => ({
+      relational: () => (
+        <CustomNode name="Relational DB" bgColor="bg-blue-300" />
+      ),
+      nosql: () => <CustomNode name="NoSql DB" bgColor="bg-green-300" />,
+    }),
+    []
+  );
+
+  const edgeTypes = useMemo(
+    () => ({
+      "delete-edge": DeleteEdge,
+    }),
+    []
+  );
+
+  const onNodeContextMenu = useCallback(
+    (event: any, node: any) => {
+      event.preventDefault();
+      if (!ref.current) return;
+      const pane = ref.current.getBoundingClientRect();
+      setMenu({
+        id: node.id,
+        top: event.clientY < pane.height - 200 && event.clientY,
+        left: event.clientX < pane.width - 200 && event.clientX,
+        right: event.clientX >= pane.width - 200 && pane.width - event.clientX,
+        bottom:
+          event.clientY >= pane.height - 200 && pane.height - event.clientY,
+      });
+    },
+    [setMenu]
+  );
+
+  const onPaneClick = useCallback(() => setMenu(null), [setMenu]);
+
   return (
     <ReactFlow
       nodes={nodes}
@@ -70,12 +114,18 @@ export const Flow = () => {
       onConnect={onConnect}
       onDrop={onDrop}
       onDragOver={onDragOver}
+      nodeTypes={nodeTypes}
+      edgeTypes={edgeTypes}
       fitView
+      onNodeContextMenu={onNodeContextMenu}
+      onPaneClick={onPaneClick}
+      ref={ref}
     >
       {" "}
       <Controls position="bottom-right" />
       <MiniMap position="top-right" />
       <Background gap={12} size={1} />
+      {menu && <NodeContextMenu onClick={onPaneClick} {...menu} />}
       <Dock />
     </ReactFlow>
   );

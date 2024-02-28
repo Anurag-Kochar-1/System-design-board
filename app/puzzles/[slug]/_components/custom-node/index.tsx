@@ -1,23 +1,36 @@
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { Handle, NodeToolbar, Position } from "reactflow";
 
+const DEFAULT_HANDLE_STYLE = {
+  width: 10,
+  height: 10,
+  bottom: -5,
+};
+
 type CustomNodeProps = {
   name: string;
   bgColor: string;
+  forceToolbarVisible?: boolean;
+  isConnectable?: boolean;
 };
 
-export function CustomNode({ name, bgColor }: CustomNodeProps) {
+export function CustomNode({
+  name,
+  bgColor,
+  forceToolbarVisible,
+  isConnectable
+}: CustomNodeProps) {
   return (
     <>
       <NodeToolbar
-        // isVisible={data.forceToolbarVisible || undefined}
-        isVisible={true}
+        isVisible={forceToolbarVisible || undefined}
         position={Position.Top}
       >
-        <button>cut</button>
-        <button>copy</button>
-        <button>paste</button>
+        <Button variant={"destructive"} size={"sm"}>
+          Delete
+        </Button>
       </NodeToolbar>
       <div
         className={cn(
@@ -45,11 +58,33 @@ export function CustomNode({ name, bgColor }: CustomNodeProps) {
           position={Position.Top}
           className="w-1 rounded-full bg-gray-500"
         />
-        <Handle
+        {/* <Handle
           id="c"
           type="source"
           position={Position.Bottom}
           className="w-1 rounded-full bg-gray-500"
+        /> */}
+         <Handle
+          type="source"
+          id="red"
+          position={Position.Bottom}
+          style={{ ...DEFAULT_HANDLE_STYLE, left: '10%', background: 'red' }}
+          onConnect={(params) => console.log('handle onConnect', params)}
+          isConnectable={isConnectable}
+        />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          id="blue"
+          style={{ ...DEFAULT_HANDLE_STYLE, left: '20%', background: 'blue' }}
+          isConnectable={isConnectable}
+        />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          id="orange"
+          style={{ ...DEFAULT_HANDLE_STYLE, left: '30%', background: 'orange' }}
+          isConnectable={isConnectable}
         />
       </div>
     </>
