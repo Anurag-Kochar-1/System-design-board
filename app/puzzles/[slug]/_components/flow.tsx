@@ -1,3 +1,4 @@
+"use client";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import ReactFlow, {
   Controls,
@@ -10,23 +11,28 @@ import ReactFlow, {
   addEdge,
   OnConnect,
   useReactFlow,
+  ControlButton,
 } from "reactflow";
 import { Dock } from "./dock";
 import { CustomNode } from "./custom-node";
 import { NodeContextMenu } from "./node-context-menu";
 import { DeleteEdge } from "./delete-edge";
-const initialNodes: Node[] = [
-  { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
-  { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
-];
-const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
+import {
+  CUSTOM_NODE_GROUPES,
+  CustomNodeGroup,
+} from "@/constants/custom-node.data";
+// const initialNodes: Node[] = [
+//   { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
+//   { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
+// ];
+// const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 export const Flow = () => {
   const reactFlow = useReactFlow();
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>([]);
   const [menu, setMenu] = useState<any>(null);
   const ref = useRef<any>(null);
 
@@ -69,15 +75,27 @@ export const Flow = () => {
     [reactFlow]
   );
 
-  const nodeTypes = useMemo(
-    () => ({
-      relational: () => (
-        <CustomNode name="Relational DB" bgColor="bg-blue-300" />
-      ),
-      nosql: () => <CustomNode name="NoSql DB" bgColor="bg-green-300" />,
-    }),
-    []
-  );
+  const populateNodeTypes = () => {
+    console.log(`🚌 populateNodeTypes function running`);
+    const components: any = {};
+    const allNodes = CUSTOM_NODE_GROUPES.reduce(
+      (accumulator: any[], currentGroup: CustomNodeGroup) => {
+        if (currentGroup.nodes) {
+          accumulator.push(...currentGroup.nodes);
+        }
+        return accumulator;
+      },
+      []
+    );
+    allNodes.forEach((node) => {
+      components[node.type] = (props: any) => (
+        <CustomNode name={props?.type} bgColor="bg-blue-400" />
+      );
+    });
+    return components;
+  };
+
+  const nodeTypes = useMemo(() => populateNodeTypes(), []);
 
   const edgeTypes = useMemo(
     () => ({
@@ -122,9 +140,9 @@ export const Flow = () => {
       ref={ref}
     >
       {" "}
-      <Controls position="bottom-right" />
-      <MiniMap position="top-right" />
+      <MiniMap position="top-right" className="hidden lg:flex" />
       <Background gap={12} size={1} />
+      <Controls position="top-left" className="hidden lg:flex" />
       {menu && <NodeContextMenu onClick={onPaneClick} {...menu} />}
       <Dock />
     </ReactFlow>

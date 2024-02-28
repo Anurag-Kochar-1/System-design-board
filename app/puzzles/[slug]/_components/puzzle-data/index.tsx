@@ -12,7 +12,7 @@ export const PuzzleData = () => {
         <h2 className="text-xl font-semibold text-foreground">
           Puzzle Title here...
         </h2>
-        <Badge  > Easy </Badge>
+        <Badge> Easy </Badge>
         <p className="text-sm text-muted-foreground">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum ex est
           nihil officia doloremque molestias.

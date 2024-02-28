@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Panel, useNodes, useReactFlow } from "reactflow";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -14,10 +14,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CUSTOM_NODE_GROUPES } from "@/constants/custom-node.data";
+import { CUSTOM_NODE_GROUPES, CustomNode } from "@/constants/custom-node.data";
+import { SearchPopoverContent } from "./search-popover-content";
 export const Dock = () => {
   const nodes = useNodes();
-  const reactFlow = useReactFlow();
   const onDragStart = (
     event: React.DragEvent<HTMLDivElement>,
     nodeType: string
@@ -28,14 +28,15 @@ export const Dock = () => {
   return (
     <Panel
       position="bottom-center"
-      className="h-24 w-[85%] max-w-xl lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl lg:w-full rounded-2xl bg-secondary border-2 flex justify-start items-center p-4"
+      className="h-24 w-[85%] max-w-xl lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl lg:w-full rounded-2xl bg-secondary border-2 flex justify-center lg:justify-start items-center p-4"
     >
       <Carousel
         opts={{
           align: "start",
           loop: true,
+          dragFree: true,
         }}
-        className="w-full mr-2 hidden md:inline-block"
+        className="w-min lg:w-full mr-2 hidden md:inline-block"
       >
         <CarouselContent className="hover:cursor-move h-16">
           {CUSTOM_NODE_GROUPES.map((group, index) => (
@@ -47,44 +48,47 @@ export const Dock = () => {
             >
               <Popover>
                 <PopoverTrigger asChild>
-                  <Card className="border-2 border-black h-full p-0 gap-0">
-                    <CardContent className="flex bg-red-400 h-full items-center justify-center p-0">
-                      <span className="font-semibold text-center">
-                        {group.name}
+                  <Card className="h-full p-0 gap-0">
+                    <CardContent className="flex bg-background shadow-md h-full items-center justify-center p-0">
+                      <span className="font-semibold text-center text-sm">
+                        + {group.name}
                       </span>
                     </CardContent>
                   </Card>
                 </PopoverTrigger>
                 <PopoverContent side="top" className="mb-4">
-                  <div className="max-w-md h-72 flex flex-col justify-start items-start gap-4">
+                  <div className="max-w-md h-72 flex flex-col justify-start items-start gap-4 overflow-y-auto">
                     {" "}
                     {group?.nodes?.map((node) => {
                       return (
                         <div
                           key={node.id}
-                          className="flex w-full justify-start items-center gap-2 p-2 border-black border-2"
+                          className="flex w-full min-h-20 justify-start items-center gap-2 p-4 border hover:cursor-move transition-all duration-150 ease-in group"
                           onDragStart={(event) => onDragStart(event, node.type)}
                           draggable
                         >
-                          <div className="aspect-square h-full bg-primary rounded-md"></div>
+                          {/* <div className="aspect-square h-full bg-primary rounded-md"></div> */}
                           <div className="mr-auto flex flex-col justify-start items-start">
-                            <span className="">{node.name}</span>
+                            <span className="text-sm font-medium">
+                              {node.name}
+                            </span>
                           </div>
                           <Button
                             variant={"outline"}
                             size={"sm"}
-                            onClick={() => {
-                              const testNode: any = {
-                                id: "asd",
-                                type: "creator",
-                                position: { x: 100, y: 50 },
-                                data: { label: `test` },
-                              };
-                              reactFlow.setNodes((nds) => nds.concat(testNode));
-                            }}
+                            className="group-hover:flex hidden text-xs"
+                            // onClick={() => {
+                            //   const testNode: any = {
+                            //     id: node.id,
+                            //     type: node.type,
+                            //     position: { x: 0, y: 0 },
+                            //     data: { label: node.name },
+                            //   };
+                            //   reactFlow.setNodes((nds) => nds.concat(testNode));
+                            // }}
                           >
                             {" "}
-                            Add
+                            Drag
                           </Button>
                         </div>
                       );
@@ -100,19 +104,14 @@ export const Dock = () => {
       {/* ========== Search button ========== */}
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant={"default"} size={"icon"} className="h-full">
+          <Button variant={"default"} className="h-full">
             {" "}
             <Search size={15} />{" "}
           </Button>
         </PopoverTrigger>
         <PopoverContent side="top" className="mb-10">
-          <div
-            className="max-w-md h-72 bg-primary"
-            onClick={() => {
-              console.log(nodes);
-            }}
-          >
-            log
+          <div className="max-w-xl h-72 flex flex-col justify-start items-start gap-4 overflow-y-auto">
+            <SearchPopoverContent />
           </div>
         </PopoverContent>
       </Popover>
