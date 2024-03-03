@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import React from "react";
-import { Panel } from "reactflow";
+import { Panel, useReactFlow } from "reactflow";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -16,7 +16,9 @@ import {
 } from "@/components/ui/popover";
 import { CUSTOM_NODE_GROUPES } from "@/constants/custom-node.data";
 import { SearchPopoverContent } from "./search-popover-content";
+import { generateRandomId } from "@/utils/generate-random-id";
 export const Dock = () => {
+  const reactFlow = useReactFlow();
   const onDragStart = (
     event: React.DragEvent<HTMLDivElement>,
     nodeType: string
@@ -24,6 +26,26 @@ export const Dock = () => {
     event.dataTransfer.setData("application/reactflow", nodeType);
     event.dataTransfer.effectAllowed = "move";
   };
+
+  const handleAddNode = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    type: string,
+    label: string
+  ) => {
+    const id = generateRandomId();
+    const position = reactFlow.screenToFlowPosition({
+      x: event.clientX,
+      y: event.clientY,
+    });
+    const newNode = {
+      id,
+      type,
+      position: position,
+      data: { label },
+    };
+    reactFlow.setNodes((nds) => nds.concat(newNode as any));
+  };
+
   return (
     <Panel
       position="bottom-center"
@@ -66,7 +88,7 @@ export const Dock = () => {
                           onDragStart={(event) => onDragStart(event, node.type)}
                           draggable
                         >
-                            <div className="mr-auto flex flex-col justify-start items-start">
+                          <div className="mr-auto flex flex-col justify-start items-start">
                             <span className="text-sm font-medium">
                               {node.name}
                             </span>
@@ -74,10 +96,19 @@ export const Dock = () => {
                           <Button
                             variant={"outline"}
                             size={"sm"}
-                            className="group-hover:flex hidden text-xs"
+                            className="hidden text-xs sm lg:flex"
                           >
                             {" "}
                             Drag
+                          </Button>
+                          <Button
+                            variant={"outline"}
+                            size={"sm"}
+                            className="lg:hidden text-xs sm"
+                            onClick={(e) => handleAddNode(e, node.type, node.name)}
+                          >
+                            {" "}
+                            Add
                           </Button>
                         </div>
                       );
