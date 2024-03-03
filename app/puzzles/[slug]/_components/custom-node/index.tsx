@@ -46,11 +46,11 @@ export function CustomNode({
       </NodeToolbar>
       <div
         className={cn(
-          `min-w-[10rem] shadow-md rounded-md text-center py-1 font-medium bg-background border-2`,
+          `min-w-[10rem] shadow-md rounded-md text-center py-1 font-medium bg-secondary border-2`,
           bgColor
         )}
       >
-        <span className="text-xs font-normal text-black">{name}</span>
+        <span className="text-xs font-normal text-secondary-foreground">{name}</span>
 
         <Handle
           id="a"

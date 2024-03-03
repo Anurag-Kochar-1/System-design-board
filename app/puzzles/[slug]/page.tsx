@@ -7,7 +7,7 @@ import { Flow } from "./_components/flow";
 
 export default function Page() {
   return (
-    <div className="flex justify-between items-center w-full h-[calc(100vh-56px)]">
+    <div className="flex justify-between items-center w-full h-[calc(100vh-64px)]">
       <PuzzleData />
       <div className="w-full lg:w-[70%] xl:w-[75%] h-full">
         <ReactFlowProvider>

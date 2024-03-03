@@ -11,7 +11,6 @@ import ReactFlow, {
   addEdge,
   OnConnect,
   useReactFlow,
-  ControlButton,
 } from "reactflow";
 import { Dock } from "./dock";
 import { CustomNode } from "./custom-node";
@@ -21,11 +20,6 @@ import {
   CUSTOM_NODE_GROUPES,
   CustomNodeGroup,
 } from "@/constants/custom-node.data";
-// const initialNodes: Node[] = [
-//   { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
-//   { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
-// ];
-// const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
@@ -76,7 +70,6 @@ export const Flow = () => {
   );
 
   const populateNodeTypes = () => {
-    console.log(`🚌 populateNodeTypes function running`);
     const components: any = {};
     const allNodes = CUSTOM_NODE_GROUPES.reduce(
       (accumulator: any[], currentGroup: CustomNodeGroup) => {
@@ -88,7 +81,9 @@ export const Flow = () => {
       []
     );
     allNodes.forEach((node) => {
-      components[node.type] = (props:any) => <CustomNode type={node.id} name={node?.name} {...props} />;
+      components[node.type] = (props: any) => (
+        <CustomNode type={node.id} name={node?.name} {...props} />
+      );
     });
     return components;
   };

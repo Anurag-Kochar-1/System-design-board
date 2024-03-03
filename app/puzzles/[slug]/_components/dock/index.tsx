@@ -35,7 +35,7 @@ export const Dock = () => {
           loop: true,
           dragFree: true,
         }}
-        className="w-min lg:w-full mr-2 hidden md:inline-block"
+        className="w-min lg:w-full mr-2 overflow-x-hidden"
       >
         <CarouselContent className="hover:cursor-move h-16">
           {CUSTOM_NODE_GROUPES.map((group, index) => (
@@ -49,7 +49,7 @@ export const Dock = () => {
                 <PopoverTrigger asChild>
                   <Card className="h-full p-0 gap-0">
                     <CardContent className="flex bg-background shadow-md h-full items-center justify-center p-0">
-                      <span className="font-semibold text-center text-sm">
+                      <span className="font-semibold text-center text-sm sm:text-sm">
                         + {group.name}
                       </span>
                     </CardContent>
@@ -66,8 +66,7 @@ export const Dock = () => {
                           onDragStart={(event) => onDragStart(event, node.type)}
                           draggable
                         >
-                          {/* <div className="aspect-square h-full bg-primary rounded-md"></div> */}
-                          <div className="mr-auto flex flex-col justify-start items-start">
+                            <div className="mr-auto flex flex-col justify-start items-start">
                             <span className="text-sm font-medium">
                               {node.name}
                             </span>
@@ -76,15 +75,6 @@ export const Dock = () => {
                             variant={"outline"}
                             size={"sm"}
                             className="group-hover:flex hidden text-xs"
-                            // onClick={() => {
-                            //   const testNode: any = {
-                            //     id: node.id,
-                            //     type: node.type,
-                            //     position: { x: 0, y: 0 },
-                            //     data: { label: node.name },
-                            //   };
-                            //   reactFlow.setNodes((nds) => nds.concat(testNode));
-                            // }}
                           >
                             {" "}
                             Drag
