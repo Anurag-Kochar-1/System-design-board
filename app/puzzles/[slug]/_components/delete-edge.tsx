@@ -35,9 +35,9 @@ export function DeleteEdge({
             transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
             pointerEvents: "all",
           }}
-          className="nodrag nopan"
+          className="nodrag nopan w-min h-min p-1"
         >
-          delete
+          ❌
         </Button>
       </EdgeLabelRenderer>
     </>

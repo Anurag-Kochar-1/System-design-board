@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { CUSTOM_NODE_GROUPES, CustomNode } from "@/constants/custom-node.data";
 import React, { useMemo, useState } from "react";
 
-export const SearchPopoverContent = () => {
+export const SearchPopoverContent = ({handleAddNode}: {handleAddNode:  (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, type: string, label: string) => void}) => {
   const [nodes, setnodes] = useState<CustomNode[]>([]);
   const allNodes = useMemo(() => {
     return CUSTOM_NODE_GROUPES.reduce(
@@ -47,15 +47,26 @@ export const SearchPopoverContent = () => {
             >
               {/* <div className="aspect-square h-full bg-primary rounded-md"></div> */}
               <div className="mr-auto flex flex-col justify-start items-start">
-                <span className="text-sm font-medium">{node.name}</span>
+                <span className="text-sm font-medium">
+                  {node.icon} {node.name}
+                </span>
               </div>
               <Button
                 variant={"outline"}
                 size={"sm"}
-                className="group-hover:flex hidden text-xs"
+                className="hidden text-xs sm lg:flex"
               >
                 {" "}
                 Drag
+              </Button>
+              <Button
+                variant={"outline"}
+                size={"sm"}
+                className="lg:hidden text-xs sm"
+                onClick={(e) => handleAddNode(e, node.type, node.name)}
+              >
+                {" "}
+                Add
               </Button>
             </div>
           );

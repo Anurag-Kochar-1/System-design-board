@@ -72,7 +72,7 @@ export const Dock = () => {
                   <Card className="h-full p-0 gap-0">
                     <CardContent className="flex bg-background shadow-md h-full items-center justify-center p-0">
                       <span className="font-semibold text-center text-sm sm:text-sm">
-                        + {group.name}
+                        {group.icon} {group.name}
                       </span>
                     </CardContent>
                   </Card>
@@ -90,7 +90,7 @@ export const Dock = () => {
                         >
                           <div className="mr-auto flex flex-col justify-start items-start">
                             <span className="text-sm font-medium">
-                              {node.name}
+                              {node.icon} {node.name}
                             </span>
                           </div>
                           <Button
@@ -105,7 +105,9 @@ export const Dock = () => {
                             variant={"outline"}
                             size={"sm"}
                             className="lg:hidden text-xs sm"
-                            onClick={(e) => handleAddNode(e, node.type, node.name)}
+                            onClick={(e) =>
+                              handleAddNode(e, node.type, node.name)
+                            }
                           >
                             {" "}
                             Add
@@ -131,7 +133,7 @@ export const Dock = () => {
         </PopoverTrigger>
         <PopoverContent side="top" className="mb-10">
           <div className="max-w-xl h-72 flex flex-col justify-start items-start gap-4 overflow-y-auto">
-            <SearchPopoverContent />
+            <SearchPopoverContent handleAddNode={handleAddNode} />
           </div>
         </PopoverContent>
       </Popover>

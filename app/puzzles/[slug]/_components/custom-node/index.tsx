@@ -1,14 +1,13 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
 import { cn } from "@/lib/utils";
 import React, { useCallback } from "react";
-import { Handle, NodeToolbar, Position, useReactFlow } from "reactflow";
-
-const DEFAULT_HANDLE_STYLE = {
-  width: 10,
-  height: 10,
-  bottom: -5,
-};
+import { Handle, Position, useReactFlow } from "reactflow";
 
 type CustomNodeProps = {
   type: string;
@@ -17,6 +16,7 @@ type CustomNodeProps = {
   bgColor?: string;
   forceToolbarVisible?: boolean;
   isConnectable?: boolean;
+  icon: string;
 };
 
 export function CustomNode({
@@ -26,6 +26,7 @@ export function CustomNode({
   bgColor,
   forceToolbarVisible,
   isConnectable = true,
+  icon,
 }: CustomNodeProps) {
   const reactFlow = useReactFlow();
 
@@ -35,85 +36,62 @@ export function CustomNode({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type]);
   return (
-    <>
-      <NodeToolbar
-        isVisible={forceToolbarVisible || undefined}
-        position={Position.Top}
-      >
-        <Button variant={"destructive"} size={"sm"} onClick={deleteNode}>
-          Delete
-        </Button>
-      </NodeToolbar>
-      <div
-        className={cn(
-          `min-w-[10rem] shadow-md rounded-md text-center py-1 font-medium bg-secondary border-2`,
-          bgColor
-        )}
-      >
-        <span className="text-xs font-normal text-secondary-foreground">
-          {name}
-        </span>
+    <ContextMenu>
+      <ContextMenuTrigger asChild>
+        <div
+          className={cn(
+            `min-w-[10rem] shadow-md rounded-md text-center py-1 font-medium bg-secondary border-2`,
+            bgColor
+          )}
+        >
+          <span className="text-xs font-normal text-secondary-foreground">
+            {icon} {name}
+          </span>
 
-        <Handle
-          id="a"
-          type="target"
-          position={Position.Left}
-          isConnectable
-          isConnectableStart
-          isConnectableEnd
-          isValidConnection={() => true}
-        />
-        <Handle
-          id="b"
-          type="source"
-          position={Position.Right}
-          isConnectable
-          isConnectableStart
-          isConnectableEnd
-          isValidConnection={() => true}
-       
-        />
-        <Handle
-          id="c"
-          type="source"
-          position={Position.Top}
-          isConnectable
-          isConnectableStart
-          isConnectableEnd
-          isValidConnection={() => true}
-        />
-        <Handle
-          id="c"
-          type="source"
-          position={Position.Bottom}
-          isConnectable
-          isConnectableStart
-          isConnectableEnd
-          isValidConnection={() => true}
-        />
-        {/* <Handle
-          type="source"
-          id="red"
-          position={Position.Bottom}
-          style={{ ...DEFAULT_HANDLE_STYLE, left: "10%", background: "red" }}
-          onConnect={(params) => console.log("handle onConnect", params)}
-          isConnectable={isConnectable}
-        />
-        <Handle
-          type="source"
-          position={Position.Bottom}
-          id="blue"
-          style={{ ...DEFAULT_HANDLE_STYLE, left: "20%", background: "blue" }}
-          isConnectable={isConnectable}
-        />
-        <Handle
-          type="source"
-          position={Position.Bottom}
-          id="orange"
-          style={{ ...DEFAULT_HANDLE_STYLE, left: "30%", background: "orange" }}
-          isConnectable={isConnectable}
-        /> */}
-      </div>
-    </>
+          <Handle
+            id="a"
+            type="target"
+            position={Position.Left}
+            isConnectable
+            isConnectableStart
+            isConnectableEnd
+            isValidConnection={() => true}
+          />
+          <Handle
+            id="b"
+            type="source"
+            position={Position.Right}
+            isConnectable
+            isConnectableStart
+            isConnectableEnd
+            isValidConnection={() => true}
+          />
+          <Handle
+            id="c"
+            type="source"
+            position={Position.Top}
+            isConnectable
+            isConnectableStart
+            isConnectableEnd
+            isValidConnection={() => true}
+          />
+          <Handle
+            id="c"
+            type="source"
+            position={Position.Bottom}
+            isConnectable
+            isConnectableStart
+            isConnectableEnd
+            isValidConnection={() => true}
+          />
+        </div>
+      </ContextMenuTrigger>
+      <ContextMenuContent>
+        <ContextMenuItem onClick={deleteNode}>
+          {" "}
+          remove this {name} block{" "}
+        </ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
   );
 }
