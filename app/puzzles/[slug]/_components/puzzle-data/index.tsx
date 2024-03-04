@@ -1,11 +1,14 @@
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import React from "react";
 
-export const PuzzleData = () => {
+export const PuzzleData = ({ className }: { className?: string }) => {
   return (
-    <div
-      className="hidden lg:flex flex-col justify-start items-start gap-10
-     w-[30%] xl:w-[25%] h-full bg-secondary border-r-2 p-4 lg:p-6 xl:p-8 overflow-y-auto"
+    <aside
+      className={cn(
+        "hidden lg:flex flex-col justify-start items-start gap-10 w-[30%] xl:w-[25%] h-full bg-secondary border-r-2 p-4 lg:p-6 xl:p-8 overflow-y-auto",
+        className
+      )}
     >
       {/* ========== Header ========== */}
       <div className="flex flex-col justify-start items-start gap-2">
@@ -91,6 +94,6 @@ export const PuzzleData = () => {
           </li>
         </ul>
       </div>
-    </div>
+    </aside>
   );
 };

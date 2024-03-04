@@ -50,33 +50,48 @@ export function CustomNode({
           bgColor
         )}
       >
-        <span className="text-xs font-normal text-secondary-foreground">{name}</span>
+        <span className="text-xs font-normal text-secondary-foreground">
+          {name}
+        </span>
 
         <Handle
           id="a"
           type="target"
           position={Position.Left}
-          className="w-1 rounded-full bg-slate-500"
+          isConnectable
+          isConnectableStart
+          isConnectableEnd
+          isValidConnection={() => true}
         />
         <Handle
           id="b"
           type="source"
           position={Position.Right}
-          className="w-1 rounded-full bg-gray-500"
+          isConnectable
+          isConnectableStart
+          isConnectableEnd
+          isValidConnection={() => true}
+       
         />
         <Handle
           id="c"
           type="source"
           position={Position.Top}
-          className="w-1 rounded-full bg-gray-500"
+          isConnectable
+          isConnectableStart
+          isConnectableEnd
+          isValidConnection={() => true}
         />
-        {/* <Handle
+        <Handle
           id="c"
           type="source"
           position={Position.Bottom}
-          className="w-1 rounded-full bg-gray-500"
-        /> */}
-        <Handle
+          isConnectable
+          isConnectableStart
+          isConnectableEnd
+          isValidConnection={() => true}
+        />
+        {/* <Handle
           type="source"
           id="red"
           position={Position.Bottom}
@@ -97,7 +112,7 @@ export function CustomNode({
           id="orange"
           style={{ ...DEFAULT_HANDLE_STYLE, left: "30%", background: "orange" }}
           isConnectable={isConnectable}
-        />
+        /> */}
       </div>
     </>
   );

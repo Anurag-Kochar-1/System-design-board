@@ -11,6 +11,7 @@ import ReactFlow, {
   addEdge,
   OnConnect,
   useReactFlow,
+  Panel,
 } from "reactflow";
 import { Dock } from "./dock";
 import { CustomNode } from "./custom-node";
@@ -20,6 +21,7 @@ import {
   CUSTOM_NODE_GROUPES,
   CustomNodeGroup,
 } from "@/constants/custom-node.data";
+import { PuzzleDataDrawer } from "./puzzle-data-drawer";
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
@@ -137,6 +139,7 @@ export const Flow = () => {
       <Background gap={12} size={1} />
       <Controls position="top-left" className="hidden lg:flex" />
       {menu && <NodeContextMenu onClick={onPaneClick} {...menu} />}
+      <PuzzleDataDrawer />
       <Dock />
     </ReactFlow>
   );
