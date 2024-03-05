@@ -40,8 +40,7 @@ export function CustomNode({
       <ContextMenuTrigger asChild>
         <div
           className={cn(
-            `min-w-[10rem] shadow-md rounded-md text-center py-1 font-medium bg-secondary border-2`,
-            bgColor
+            `min-w-[10rem] bg-secondary shadow-lg rounded-md text-center py-1 font-medium border-2`
           )}
         >
           <span className="text-xs font-normal text-secondary-foreground">
