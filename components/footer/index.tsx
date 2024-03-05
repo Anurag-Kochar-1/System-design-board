@@ -10,7 +10,13 @@ export const Footer = () => {
       <span className="text-sm font-semimedium text-pretty">
         {" "}
         Product by{" "}
-        <a href="https://twitter.com/anurag__kochar">Anurag kochar</a>{" "}
+        <a
+          href="https://twitter.com/anurag__kochar"
+          className="text-blue-500 underline hover:text-blue-600"
+          target="_blank"
+        >
+          Anurag kochar
+        </a>{" "}
       </span>
     </footer>
   );

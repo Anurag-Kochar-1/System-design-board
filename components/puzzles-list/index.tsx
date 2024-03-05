@@ -5,13 +5,15 @@ export const PuzzlesList = () => {
   return (
     <section className="flex flex-col justify-start items-start w-full gap-10">
       <div className="w-full flex justify-between items-center">
-        <h3 className="text-xl md:text-2xl lg:text-4xl font-semibold leading-tighter tracking-tighter">
+        <h2 className="text-xl md:text-2xl lg:text-4xl font-bold leading-tighter tracking-tighter">
           {" "}
           Today&apos;s puzzles{" "}
-        </h3>
-        <Link href={`/`} className="text-sm font-medium hover:underline">View all</Link>
+        </h2>
+        <Link href={`/`} className="text-sm font-medium hover:underline">
+          View all
+        </Link>
       </div>
-      <ul className="flex flex-col justify-start items-start gap-4 w-full">
+      <ul className="flex flex-col justify-start items-start gap-6 w-full">
         {Array(5)
           .fill(0)
           .map((_, index) => (

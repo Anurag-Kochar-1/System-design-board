@@ -13,10 +13,10 @@ export const Header = async () => {
       <LogoWithText className="hidden md:flex" />
 
       <div className="flex justify-center items-center gap-4">
-        <ThemeToggle />
+        <Button variant={'secondary'}>Create an empty board</Button>
         {!user ? (
           <SignUpButton mode="modal">
-            <Button>Sign up</Button>
+            <Button>Get started</Button>
           </SignUpButton>
         ) : (
           <UserButton afterSignOutUrl="/" />
