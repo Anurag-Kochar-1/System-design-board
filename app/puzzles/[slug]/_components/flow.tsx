@@ -22,16 +22,54 @@ import {
 import { PuzzleDataDrawer } from "./puzzle-data-drawer";
 let id = 0;
 const getId = () => `dndnode_${id++}`;
+const initialNodes = [
+  {
+    id: "lb",
+    type: "lb",
+    position: { x: 250, y: 5 },
+    data: { label: "Load Balancer" },
+  },
+  {
+    id: "server1",
+    type: "server",
+    position: { x: 100, y: 200 },
+    data: { label: "Server 1" },
+  },
+  {
+    id: "server2",
+    type: "server",
+    position: { x: 400, y: 200 },
+    data: { label: "Server 2" },
+  },
+];
 
+const initialEdges = [
+  {
+    id: "e1",
+    source: "lb",
+    target: "server1",
+    animated: true,
+    label: "50% Traffic", type: "custom-edge"
+  },
+  {
+    id: "e2",
+    source: "lb",
+    target: "server2",
+    animated: true,
+    label: "50% Traffic", type: "custom-edge"
+  },
+];
 export const Flow = () => {
   const reactFlow = useReactFlow();
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(
+    initialNodes as Node[]
+  );
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
   const ref = useRef<any>(null);
 
   const onConnect: OnConnect = useCallback(
     (params) => {
-      const edge = { ...params, type: "custom-edge", };
+      const edge = { ...params, type: "custom-edge" };
       setEdges((eds) => addEdge(edge, eds));
     },
     [setEdges]

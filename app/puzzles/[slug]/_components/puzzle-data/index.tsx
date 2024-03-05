@@ -13,12 +13,12 @@ export const PuzzleData = ({ className }: { className?: string }) => {
       {/* ========== Header ========== */}
       <div className="flex flex-col justify-start items-start gap-2">
         <h2 className="text-xl font-semibold text-foreground">
-          Puzzle Title here...
+          Basic Load Balancer Setup
         </h2>
         <Badge> Easy </Badge>
         <p className="text-sm text-muted-foreground">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum ex est
-          nihil officia doloremque molestias.
+          Design a simple load balancer system that evenly distributes incoming
+          traffic to two web servers.
         </p>
       </div>
       {/* ========== Functional requirements ========== */}
@@ -28,20 +28,13 @@ export const PuzzleData = ({ className }: { className?: string }) => {
         </span>
         <ul className="list-disc flex flex-col gap-2 [&>li]:ml-4">
           <li className="text-xs font-light text-muted-foreground">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque,
-            blanditiis.
+            The load balancer should support round-robin distribution.
           </li>
           <li className="text-xs font-light text-muted-foreground">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque,
-            blanditiis.
+            Each server must handle one request at a time.
           </li>
           <li className="text-xs font-light text-muted-foreground">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque,
-            blanditiis.
-          </li>
-          <li className="text-xs font-light text-muted-foreground">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque,
-            blanditiis.
+            The system should be able to scale by adding more servers.
           </li>
         </ul>
       </div>
@@ -53,12 +46,10 @@ export const PuzzleData = ({ className }: { className?: string }) => {
         </span>
         <ul className="list-disc flex flex-col gap-2 [&>li]:ml-4">
           <li className="text-xs font-light text-muted-foreground">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque,
-            blanditiis.
+            The load balancer must have high availability.
           </li>
           <li className="text-xs font-light text-muted-foreground">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque,
-            blanditiis.
+            The system should ensure minimal latency.
           </li>
         </ul>
       </div>
@@ -69,12 +60,10 @@ export const PuzzleData = ({ className }: { className?: string }) => {
         </span>
         <ul className="list-disc flex flex-col gap-2 [&>li]:ml-4">
           <li className="text-xs font-light text-muted-foreground">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque,
-            blanditiis.
+            Web servers are identical and stateless.
           </li>
           <li className="text-xs font-light text-muted-foreground">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque,
-            blanditiis.
+            Traffic is HTTP-based.
           </li>
         </ul>
       </div>
@@ -85,12 +74,7 @@ export const PuzzleData = ({ className }: { className?: string }) => {
         </span>
         <ul className="list-disc flex flex-col gap-2 [&>li]:ml-4">
           <li className="text-xs font-light text-muted-foreground">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque,
-            blanditiis.
-          </li>
-          <li className="text-xs font-light text-muted-foreground">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque,
-            blanditiis.
+            The system is expected to handle up to 1000 requests per minute.
           </li>
         </ul>
       </div>
