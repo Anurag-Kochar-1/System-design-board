@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import ReactFlow, {
   Controls,
   Background,
@@ -11,6 +11,7 @@ import ReactFlow, {
   addEdge,
   OnConnect,
   useReactFlow,
+  Panel,
 } from "reactflow";
 import { Dock } from "./dock";
 import { CustomNode } from "./custom-node";
@@ -20,51 +21,21 @@ import {
   CustomNodeGroup,
 } from "@/constants/custom-node.data";
 import { PuzzleDataDrawer } from "./puzzle-data-drawer";
+import { getQuestion } from "@/lib/utils";
+import { useParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
 let id = 0;
 const getId = () => `dndnode_${id++}`;
-const initialNodes = [
-  {
-    id: "lb",
-    type: "lb",
-    position: { x: 250, y: 5 },
-    data: { label: "Load Balancer" },
-  },
-  {
-    id: "server1",
-    type: "server",
-    position: { x: 100, y: 200 },
-    data: { label: "Server 1" },
-  },
-  {
-    id: "server2",
-    type: "server",
-    position: { x: 400, y: 200 },
-    data: { label: "Server 2" },
-  },
-];
 
-const initialEdges = [
-  {
-    id: "e1",
-    source: "lb",
-    target: "server1",
-    animated: true,
-    label: "50% Traffic", type: "custom-edge"
-  },
-  {
-    id: "e2",
-    source: "lb",
-    target: "server2",
-    animated: true,
-    label: "50% Traffic", type: "custom-edge"
-  },
-];
 export const Flow = () => {
+  const params = useParams<{ slug: string }>();
+  const question = getQuestion(params?.slug);
   const reactFlow = useReactFlow();
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(
-    initialNodes as Node[]
-  );
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
+
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>([]);
+  const [isAnswerRevealed, setIsAnswerRevealed] = useState<boolean>(false);
+
   const ref = useRef<any>(null);
 
   const onConnect: OnConnect = useCallback(
@@ -139,6 +110,18 @@ export const Flow = () => {
     []
   );
 
+  const handleRevealAnswer = () => {
+    if (!isAnswerRevealed) {
+      setNodes(question.answerNodes);
+      setEdges(question.answerEdges);
+      setIsAnswerRevealed(true);
+    } else {
+      setNodes([]);
+      setEdges([]);
+      setIsAnswerRevealed(false);
+    }
+  };
+
   return (
     <ReactFlow
       nodes={nodes}
@@ -152,13 +135,36 @@ export const Flow = () => {
       edgeTypes={edgeTypes}
       fitView
       ref={ref}
+      proOptions={{
+        hideAttribution: true,
+      }}
     >
       {" "}
-      <MiniMap position="top-right" className="hidden lg:flex" />
+      <MiniMap position="top-right" className="hidden xl:flex" />
       <Background gap={12} size={1} />
       <Controls position="top-left" className="hidden lg:flex" />
       <PuzzleDataDrawer />
       <Dock />
+      <Panel position="bottom-left" className="hidden xl:block">
+        <Button
+          variant={"ghost"}
+          size={"sm"}
+          className="border-2 hover:border-black bg-secondary"
+          onClick={handleRevealAnswer}
+        >
+          {isAnswerRevealed ? "Hide" : "Reveal"} Answer{" "}
+        </Button>
+      </Panel>
+      <Panel position="top-right" className="xl:hidden">
+        <Button
+          variant={"ghost"}
+          size={"sm"}
+          className="border-2 hover:border-black bg-secondary"
+          onClick={handleRevealAnswer}
+        >
+          {isAnswerRevealed ? "Hide" : "Reveal"} Answer{" "}
+        </Button>
+      </Panel>
     </ReactFlow>
   );
 };

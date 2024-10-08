@@ -3,9 +3,9 @@ import React from "react";
 
 export const Demo = () => {
   return (
-    <div className="w-full bg-primary h-min flex justify-center items-center border-2 border-black">
+    <div className="w-full bg-background h-min flex justify-center items-center border-2 border-black">
       <Image
-        src={`/images/demo-1.jpeg`}
+        src={`/images/board.png`}
         alt="demo-puzzle-board-picture"
         width={1200}
         height={1200}
