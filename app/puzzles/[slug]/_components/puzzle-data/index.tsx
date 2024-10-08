@@ -1,8 +1,13 @@
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn, getQuestion } from "@/lib/utils";
+import { useParams } from "next/navigation";
 import React from "react";
 
+
 export const PuzzleData = ({ className }: { className?: string }) => {
+  const params = useParams<{ slug: string }>();
+  const question = getQuestion(params?.slug);
+
   return (
     <aside
       className={cn(
@@ -13,11 +18,11 @@ export const PuzzleData = ({ className }: { className?: string }) => {
       {/* ========== Header ========== */}
       <div className="flex flex-col justify-start items-start gap-2">
         <h2 className="text-xl font-semibold text-foreground">
-          Basic Load Balancer Setup
+          {question?.title}
         </h2>
-        <Badge> Easy </Badge>
+        <Badge> {question.difficulty} </Badge>
         <p className="text-sm text-muted-foreground">
-          Design a simple load balancer system that evenly distributes incoming
+          {question?.description}
           traffic to two web servers.
         </p>
       </div>
@@ -27,15 +32,15 @@ export const PuzzleData = ({ className }: { className?: string }) => {
           Functional Requirements
         </span>
         <ul className="list-disc flex flex-col gap-2 [&>li]:ml-4">
-          <li className="text-xs font-light text-muted-foreground">
-            The load balancer should support round-robin distribution.
-          </li>
-          <li className="text-xs font-light text-muted-foreground">
-            Each server must handle one request at a time.
-          </li>
-          <li className="text-xs font-light text-muted-foreground">
-            The system should be able to scale by adding more servers.
-          </li>
+          {question?.functionalRequirements.map((item, index) => (
+            <li
+              className="text-xs font-light text-muted-foreground"
+              key={index}
+            >
+              {" "}
+              {item}{" "}
+            </li>
+          ))}
         </ul>
       </div>
 
@@ -45,12 +50,17 @@ export const PuzzleData = ({ className }: { className?: string }) => {
           Non-functional Requirements
         </span>
         <ul className="list-disc flex flex-col gap-2 [&>li]:ml-4">
-          <li className="text-xs font-light text-muted-foreground">
-            The load balancer must have high availability.
-          </li>
-          <li className="text-xs font-light text-muted-foreground">
-            The system should ensure minimal latency.
-          </li>
+          {question?.nonFunctionalRequirements.map(
+            (item, index) => (
+              <li
+                className="text-xs font-light text-muted-foreground"
+                key={index}
+              >
+                {" "}
+                {item}{" "}
+              </li>
+            )
+          )}
         </ul>
       </div>
       {/* ========== Assumptions ========== */}
@@ -59,12 +69,15 @@ export const PuzzleData = ({ className }: { className?: string }) => {
           Assumptions
         </span>
         <ul className="list-disc flex flex-col gap-2 [&>li]:ml-4">
-          <li className="text-xs font-light text-muted-foreground">
-            Web servers are identical and stateless.
-          </li>
-          <li className="text-xs font-light text-muted-foreground">
-            Traffic is HTTP-based.
-          </li>
+          {question?.assumptions.map((item, index) => (
+            <li
+              className="text-xs font-light text-muted-foreground"
+              key={index}
+            >
+              {" "}
+              {item}{" "}
+            </li>
+          ))}
         </ul>
       </div>
       {/* ========== Estimated Usage ========== */}
@@ -73,9 +86,15 @@ export const PuzzleData = ({ className }: { className?: string }) => {
           Estimated Usage
         </span>
         <ul className="list-disc flex flex-col gap-2 [&>li]:ml-4">
-          <li className="text-xs font-light text-muted-foreground">
-            The system is expected to handle up to 1000 requests per minute.
-          </li>
+          {question?.estimatedUsage.map((item, index) => (
+            <li
+              className="text-xs font-light text-muted-foreground"
+              key={index}
+            >
+              {" "}
+              {item}{" "}
+            </li>
+          ))}
         </ul>
       </div>
     </aside>

@@ -22,7 +22,7 @@ export const Hero = () => {
               <Link href={`/puzzles/1`}>
                 <Button size={"lg"}>Get started</Button>
               </Link>
-              <Link href={`/puzzles/demo`}>
+              <Link href={`/puzzles/basic-load-balancer`}>
                 <Button size={"lg"} variant={"secondary"}>
                   Play Demo
                 </Button>

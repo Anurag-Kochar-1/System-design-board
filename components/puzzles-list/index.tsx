@@ -1,3 +1,4 @@
+import { PUZZLE_QUESTIONS } from "@/data/questions";
 import Link from "next/link";
 import React from "react";
 
@@ -14,16 +15,18 @@ export const PuzzlesList = () => {
         </Link>
       </div>
       <ul className="flex flex-col justify-start items-start gap-6 w-full">
-        {Array(5)
-          .fill(0)
-          .map((_, index) => (
-            <Link key={index} href={`/puzzles/${index}`} className={"w-full"}>
-              <li className="bg-secondary border p-3 w-full flex justify-start items-center">
-                {" "}
-                <span>Puzzle {index + 1}</span>{" "}
-              </li>
-            </Link>
-          ))}
+        {PUZZLE_QUESTIONS.map((question, index) => (
+          <Link
+            key={index}
+            href={`/puzzles/${question.id}`}
+            className={"w-full"}
+          >
+            <li className="bg-secondary border p-3 w-full flex justify-start items-center">
+              {" "}
+              <span>{question.title}</span>{" "}
+            </li>
+          </Link>
+        ))}
       </ul>
     </section>
   );
