@@ -1,7 +1,7 @@
-import { Badge } from "@/components/ui/badge";
 import { cn, getQuestion } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import React from "react";
+import { useReactFlow } from "reactflow";
 
 export const PuzzleData = ({ className }: { className?: string }) => {
   const params = useParams<{ slug: string }>();
@@ -19,12 +19,24 @@ export const PuzzleData = ({ className }: { className?: string }) => {
         <h2 className="text-xl font-semibold text-foreground">
           {question?.title}
         </h2>
-        <Badge> {question?.difficulty} </Badge>
+
+        <span
+          className={`text-xs font-bold py-1 px-2 rounded ${
+            question.difficulty === "easy"
+              ? "bg-green-600 text-green-100"
+              : question.difficulty === "intermediate"
+              ? "bg-orange-600 text-orange-100"
+              : "bg-red-600 text-red-100"
+          }`}
+        >
+          {question.difficulty}
+        </span>
         <p className="text-sm text-muted-foreground">
           {question?.description}
           traffic to two web servers.
         </p>
       </div>
+
       {/* ========== Functional requirements ========== */}
       <div className="flex flex-col justify-start items-start gap-4">
         <span className="text-base font-medium text-secondary-foreground">

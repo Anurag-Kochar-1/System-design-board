@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import ReactFlow, {
   Controls,
   Background,
@@ -11,6 +11,7 @@ import ReactFlow, {
   addEdge,
   OnConnect,
   useReactFlow,
+  Panel,
 } from "reactflow";
 import { Dock } from "./dock";
 import { CustomNode } from "./custom-node";
@@ -22,6 +23,7 @@ import {
 import { PuzzleDataDrawer } from "./puzzle-data-drawer";
 import { getQuestion } from "@/lib/utils";
 import { useParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
@@ -29,12 +31,11 @@ export const Flow = () => {
   const params = useParams<{ slug: string }>();
   const question = getQuestion(params?.slug);
   const reactFlow = useReactFlow();
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(
-    question?.answerNodes as Node[]
-  );
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(
-    question?.answerEdges
-  );
+
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>([]);
+  const [isAnswerRevealed, setIsAnswerRevealed] = useState<boolean>(false);
+
   const ref = useRef<any>(null);
 
   const onConnect: OnConnect = useCallback(
@@ -109,6 +110,18 @@ export const Flow = () => {
     []
   );
 
+  const handleRevealAnswer = () => {
+    if (!isAnswerRevealed) {
+      setNodes(question.answerNodes);
+      setEdges(question.answerEdges);
+      setIsAnswerRevealed(true);
+    } else {
+      setNodes([]);
+      setEdges([]);
+      setIsAnswerRevealed(false);
+    }
+  };
+
   return (
     <ReactFlow
       nodes={nodes}
@@ -124,11 +137,31 @@ export const Flow = () => {
       ref={ref}
     >
       {" "}
-      <MiniMap position="top-right" className="hidden lg:flex" />
+      <MiniMap position="top-right" className="hidden xl:flex" />
       <Background gap={12} size={1} />
       <Controls position="top-left" className="hidden lg:flex" />
       <PuzzleDataDrawer />
       <Dock />
+      <Panel position="bottom-left" className="hidden xl:block">
+        <Button
+          variant={"ghost"}
+          size={"sm"}
+          className="border-2 hover:border-black bg-secondary"
+          onClick={handleRevealAnswer}
+        >
+          {isAnswerRevealed ? "Hide" :"Reveal"} Answer{" "}
+        </Button>
+      </Panel>
+      <Panel position="top-right" className="xl:hidden">
+        <Button
+          variant={"ghost"}
+          size={"sm"}
+          className="border-2 hover:border-black bg-secondary"
+          onClick={handleRevealAnswer}
+        >
+          {isAnswerRevealed ? "Hide" :"Reveal"} Answer{" "}
+        </Button>
+      </Panel>
     </ReactFlow>
   );
 };

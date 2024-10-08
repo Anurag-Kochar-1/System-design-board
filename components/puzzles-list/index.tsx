@@ -18,10 +18,10 @@ export const PuzzlesList = () => {
                 <span
                   className={`text-xs font-bold py-1 px-2 rounded ${
                     question.difficulty === "easy"
-                      ? "bg-green-200 text-green-800"
+                      ? "bg-green-600 text-green-100"
                       : question.difficulty === "intermediate"
-                      ? "bg-orange-200 text-orange-800"
-                      : "bg-red-200 text-red-800"
+                      ? "bg-orange-600 text-orange-100"
+                      : "bg-red-600 text-red-100"
                   }`}
                 >
                   {question.difficulty.charAt(0).toUpperCase() +
