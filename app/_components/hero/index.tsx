@@ -1,8 +1,16 @@
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { PUZZLE_QUESTIONS } from "@/data/questions";
+import { cn, getCustomWeekdayNumber, getQuestion } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 
 export const Hero = () => {
+  const date = new Date();
+  const dayIndex = getCustomWeekdayNumber(date);
+  const todayQuestion = getQuestion(
+    PUZZLE_QUESTIONS[(dayIndex > 7 ? 1 : dayIndex) - 1].id
+  );
+
   return (
     <section className="w-full mx-auto px-4 sm:px-6">
       <div className="pt-12 pb-12 md:pt-28">
@@ -18,16 +26,17 @@ export const Hero = () => {
               Prepare for your system design interview with engaging puzzles on
               a flexible node-based editor.
             </p>
-            <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center gap-4">
-              <Link href={`/puzzles/1`}>
-                <Button size={"lg"}>Get started</Button>
-              </Link>
-              <Link href={`/puzzles/basic-load-balancer`}>
-                <Button size={"lg"} variant={"secondary"}>
-                  Play Demo
-                </Button>
-              </Link>
-            </div>
+            <Link
+              className={cn(
+                buttonVariants({
+                  size: "lg",
+                  class: "w-full max-w-xs",
+                })
+              )}
+              href={`/puzzles/${todayQuestion.id}`}
+            >
+              Play Today&apos;s Question
+            </Link>
           </div>
         </div>
       </div>

@@ -1,7 +1,10 @@
 import React from "react";
-import { Button } from "../ui/button";
 import { Logo } from "../branding/logo";
 import { LogoWithText } from "../branding/logo-with-text";
+import { Button, buttonVariants } from "../ui/button";
+import { X } from "lucide-react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export const Header = () => {
   return (
@@ -9,9 +12,20 @@ export const Header = () => {
       <Logo className="md:hidden" />
       <LogoWithText className="hidden md:flex" />
 
-      <div className="flex justify-center items-center gap-4">
-        <Button>Create an empty board</Button>
-      </div>
+      <Link
+        href={"https://x.com/anurag__kochar"}
+        target="_blank
+      "
+        className={cn(
+          buttonVariants({
+            size: "icon",
+            className: "bg-black hover:bg-black/90 w-8 h-8",
+          })
+        )}
+      >
+        {" "}
+        <X size={15} color="white" />{" "}
+      </Link>
     </header>
   );
 };

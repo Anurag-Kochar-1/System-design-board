@@ -3,7 +3,6 @@ import { cn, getQuestion } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import React from "react";
 
-
 export const PuzzleData = ({ className }: { className?: string }) => {
   const params = useParams<{ slug: string }>();
   const question = getQuestion(params?.slug);
@@ -20,7 +19,7 @@ export const PuzzleData = ({ className }: { className?: string }) => {
         <h2 className="text-xl font-semibold text-foreground">
           {question?.title}
         </h2>
-        <Badge> {question.difficulty} </Badge>
+        <Badge> {question?.difficulty} </Badge>
         <p className="text-sm text-muted-foreground">
           {question?.description}
           traffic to two web servers.
@@ -50,17 +49,15 @@ export const PuzzleData = ({ className }: { className?: string }) => {
           Non-functional Requirements
         </span>
         <ul className="list-disc flex flex-col gap-2 [&>li]:ml-4">
-          {question?.nonFunctionalRequirements.map(
-            (item, index) => (
-              <li
-                className="text-xs font-light text-muted-foreground"
-                key={index}
-              >
-                {" "}
-                {item}{" "}
-              </li>
-            )
-          )}
+          {question?.nonFunctionalRequirements.map((item, index) => (
+            <li
+              className="text-xs font-light text-muted-foreground"
+              key={index}
+            >
+              {" "}
+              {item}{" "}
+            </li>
+          ))}
         </ul>
       </div>
       {/* ========== Assumptions ========== */}

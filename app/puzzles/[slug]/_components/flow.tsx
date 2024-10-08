@@ -30,10 +30,10 @@ export const Flow = () => {
   const question = getQuestion(params?.slug);
   const reactFlow = useReactFlow();
   const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(
-    question.answerNodes as Node[]
+    question?.answerNodes as Node[]
   );
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(
-    question.answerEdges
+    question?.answerEdges
   );
   const ref = useRef<any>(null);
 
