@@ -40,10 +40,10 @@ const items = [
     icon: <></>,
   },
   {
-    title: "Powered by AI",
+    title: "Powered by AI (coming soon)",
     description: (
       <span className="text-sm">
-        Get suggestions and help from our AI (coming soon).
+        Get suggestions and help from our AI.
       </span>
     ),
     header: <div className="w-full h-full bg-[#A4A4A4]"> </div>,
@@ -51,7 +51,7 @@ const items = [
     icon: <></>,
 },
 {
-    title: "Brainstorming",
+    title: "Brainstorming (coming soon)",
     description: (
         <span className="text-sm">
         Don&apos;t want to solve puzzles? Create an empty board for yourself.
@@ -63,7 +63,7 @@ const items = [
   },
 
   {
-    title: "Leaderboard",
+    title: "Leaderboard (coming soon)",
     description: (
       <span className="text-sm">
         Compete with others and boost your interview confidence.
