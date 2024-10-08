@@ -135,6 +135,9 @@ export const Flow = () => {
       edgeTypes={edgeTypes}
       fitView
       ref={ref}
+      proOptions={{
+        hideAttribution: true,
+      }}
     >
       {" "}
       <MiniMap position="top-right" className="hidden xl:flex" />
@@ -149,7 +152,7 @@ export const Flow = () => {
           className="border-2 hover:border-black bg-secondary"
           onClick={handleRevealAnswer}
         >
-          {isAnswerRevealed ? "Hide" :"Reveal"} Answer{" "}
+          {isAnswerRevealed ? "Hide" : "Reveal"} Answer{" "}
         </Button>
       </Panel>
       <Panel position="top-right" className="xl:hidden">
@@ -159,7 +162,7 @@ export const Flow = () => {
           className="border-2 hover:border-black bg-secondary"
           onClick={handleRevealAnswer}
         >
-          {isAnswerRevealed ? "Hide" :"Reveal"} Answer{" "}
+          {isAnswerRevealed ? "Hide" : "Reveal"} Answer{" "}
         </Button>
       </Panel>
     </ReactFlow>
